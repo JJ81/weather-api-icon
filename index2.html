@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather API</title>
+</head>
+<body>
+
+	
+	<div id="current_weather"></div>
+
+
+	<script src="./bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="./bower_components/axios/dist/axios.min.js"></script>
+	<!--have to publish api key from http://openweathermap.org -->
+	<script src="./apikey.js"></script>
+	<script>
+
+		var region = "Seoul,kr"; // default
+		var current_weather = $('#current_weather'); // el target
+
+		function callApi(url){
+			axios.get(url)
+				.then(function (response) {
+					// console.log(response);
+					//console.log(response.data.weather[0].icon);
+
+					var weather_img = $('<img />', {
+						id: 'weather_icon_img',
+						src: 'http://openweathermap.org/img/w/'+response.data.weather[0].icon+'.png',
+						alt: ''
+					});
+
+					current_weather.html(weather_img);
+					current_weather.append('<p> Location : <strong>'+response.data.name+'</strong></p>');
+					current_weather.append('<p> status: <strong>'+response.data.weather[0].description+'</strong></p>');
+
+				})
+				.catch(function (error) {
+					console.log(error);
+
+				});
+		}
+
+		function getLocation() {
+			if (navigator.geolocation) {
+				console.log( navigator.geolocation.getCurrentPosition(showPosition) );
+			} else {
+				console.error("Geolocation is not supported by this browser.");
+			}
+		}
+
+		function showPosition(position) {
+			console.log("Latitude: " + position.coords.latitude + "Longitude: " + position.coords.longitude);
+			callApi('http://api.openweathermap.org/data/2.5/weather?appid=' + APIKEY + '&lat=' + position.coords.latitude + '&lon=' + position.coords.longitude);
+		}
+
+
+		callApi('http://api.openweathermap.org/data/2.5/weather?q='+region+'&appid=' + APIKEY);
+		getLocation();
+
+
+	</script>
+
+</body>
+</html>
