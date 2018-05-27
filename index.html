@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather API</title>
+</head>
+<body>
+
+
+	<div id="current_weather"></div>
+
+	<script src="./bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="./bower_components/axios/dist/axios.min.js"></script>
+	<!--have to publish api key from http://openweathermap.org -->
+	<script src="./apikey.js"></script>
+	<script>
+
+		var region = "Seoul,kr";
+		var current_weather = $('#current_weather');
+
+		axios.get('http://api.openweathermap.org/data/2.5/weather?q='+region+'&appid=' + APIKEY)
+		  .then(function (response) {
+		    // console.log(response);
+		    //console.log(response.data.weather[0].icon);
+
+		    var weather_img = $('<img />', { 
+			  src: 'http://openweathermap.org/img/w/'+response.data.weather[0].icon+'.png',
+			  alt: ''
+			});
+
+		    current_weather.append(weather_img);
+
+		  })
+		  .catch(function (error) {
+		    console.log(error);
+
+		  });
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "weatherapi",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "yijaejun <yijaejun81@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/simon0210/clipplr_front_env",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "axios": "^0.18.0",
+    "jquery": "^3.3.1"
+  }
+}
